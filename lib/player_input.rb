@@ -6,13 +6,16 @@ class PlayerInput
     Curses.noecho
     # getchを非ブロッキングモードにする
     Curses.stdscr.nodelay = 1
-     # カーソルを非表示にする
+    # 矢印キーを有効にする
+    Curses.stdscr.keypad(true)
+    # カーソルを非表示にする
     Curses.curs_set(0)
   end
 
   def from_key
     case Curses.getch
     when 'q' then :quit
+    when Curses::Key::UP then :rotate
     end
   end
 end

@@ -21,7 +21,7 @@ class Game
       break if input == :quit
 
       # テトリミノを更新
-      @tetorimino.update
+      @tetorimino.update(input)
 
       # フィールドを描画
       @display.draw(@field, @tetorimino)

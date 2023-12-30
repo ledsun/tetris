@@ -13,7 +13,8 @@ module Tetorimino
     end
 
     # フレーム毎に呼び出される更新処理
-    def update()
+    def update(input)
+      rotate if input == :rotate
       fall unless @is_landed
     end
 
@@ -25,6 +26,15 @@ module Tetorimino
     end
 
     private
+
+    def rotate
+      before = @shape_map
+      @shape_map = @shape_map.transpose.map(&:reverse)
+      # 回転後に衝突したら回転を元に戻す
+      if collision?
+        @shape_map = before
+      end
+    end
 
     # 落下処理
     # 50フレームに1回落下する
