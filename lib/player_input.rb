@@ -17,6 +17,9 @@ class PlayerInput
     when 'q' then :quit
     when 'r' then :restart
     when Curses::Key::UP then :rotate
+    when Curses::Key::LEFT then :left
+    when Curses::Key::RIGHT then :right
+    when Curses::Key::DOWN then :down
     end
   end
 end

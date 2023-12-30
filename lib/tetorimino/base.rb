@@ -16,6 +16,9 @@ module Tetorimino
     # フレーム毎に呼び出される更新処理
     def update(input)
       rotate if input == :rotate
+      go_left if input == :left
+      go_right if input == :right
+      go_down if input == :down
       fall unless @is_landed
     end
 
@@ -41,6 +44,28 @@ module Tetorimino
       # 回転後に衝突したら回転を元に戻す
       if collision?
         @shape_map = before
+      end
+    end
+
+    def go_right
+      @x += 1
+      if collision?
+        @x -= 1
+      end
+    end
+
+    def go_left
+      @x -= 1
+      if collision?
+        @x += 1
+      end
+    end
+
+    def go_down
+      @y += 1
+      if collision?
+        @y -= 1
+        landing
       end
     end
 
