@@ -1,5 +1,6 @@
 require_relative 'cell'
 
+# フィールドの外周を表すクラス
 class Wall < Cell
   def initialize(x, y)
     super(x, y)

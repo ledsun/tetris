@@ -4,34 +4,55 @@ class Display
   SQUARE = '■'
 
   def initialize
+    # cursesによる画面制御の開始
     Curses.init_screen
+    # カラー処理を有効化
     Curses.start_color
+    # 端末のデフォルトの前景色と背景色を使用するように設定
     Curses.use_default_colors
 
+    # カラーペアを初期化するためのループ
+    # cursesは256色をサポートしているので、それぞれのペアを設定する
     (0..255).each do |i|
+      # 同じ前景色とデフォルトの背景色を持つカラーペアを初期化する
+      # 引数:1番目はペア番号、2番目は前景色、3番目は背景色(-1はデフォルトの背景色)
       Curses.init_pair(i, i, -1)
     end
   end
 
+  # フィールドの情報をもとに画面を描画する
   def draw(field)
+    # 画面をクリア
     Curses.clear
+    # フィールドの描画
     draw_field(field)
+    # 画面に変更を反映
     Curses.refresh
   end
 
+  # cursesによる画面制御を終わる
   def close
     Curses.close_screen
   end
 
   private
 
+  # フィールドの描画
   def draw_field(field)
-    field.cells { |cell| draw_block(cell) if cell.has_block? }
+    field.cells do |cell|
+      # セルにブロックがあれば描画する
+      draw_block(cell) if cell.has_block?
+    end
   end
 
+  # ブロックの描画
   def draw_block(cell)
+    # カーソル位置を設定する
+    # x軸の値をそのまま使うと詰まった様な印象の画面になるので2倍する
     Curses.setpos(cell.y, cell.x * 2)
+    # カラーペアを適用する
     Curses.attrset(Curses.color_pair(cell.block_color))
+     # ブロックを描画する
     Curses.addstr(SQUARE)
   end
 end

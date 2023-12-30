@@ -1,6 +1,8 @@
 require_relative 'wall'
 
+# ゲームの盤面を表すクラス
 class Field
+  # 縦20マス、横10マス に壁を足したサイズ
   HEIGHT = 22
   WIDTH = 12
 
