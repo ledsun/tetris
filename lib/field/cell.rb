@@ -10,4 +10,8 @@ class Cell
     @x = x
     @y = y
   end
+
+  def paint(color)
+    @block = Block.new(color, @x, @y)
+  end
 end

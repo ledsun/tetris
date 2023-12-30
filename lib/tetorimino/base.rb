@@ -10,6 +10,7 @@ module Tetorimino
       @y = 0
       @is_landed = false
       @fall_count = FRAMES_TO_FALL
+      @stacked = collision?
     end
 
     # フレーム毎に呼び出される更新処理
@@ -25,7 +26,12 @@ module Tetorimino
       end
     end
 
+    def paint(color)
+      @color = color
+    end
+
     def landed? = @is_landed
+    def stacked? = @stacked
 
     private
 

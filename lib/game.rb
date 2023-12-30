@@ -20,10 +20,19 @@ class Game
       # ゲーム終了
       break if input == :quit
 
+      # ゲームオーバーしていたらリスタートできる
+      if game_over?
+        restart if input == :restart
+        next
+      end
+
       # テトリミノが着地したら新しいテトリミノを生成
       if @tetorimino.landed?
         @tetorimino = Tetorimino.create(@field)
       end
+
+      # ゲームオーバー判定
+      next game_over! if game_over?
 
       # テトリミノを更新
       @tetorimino.update(input)
@@ -36,5 +45,26 @@ class Game
     end
 
     @display.close
+  end
+
+  private
+
+  # tetoriminoがフィールドの上部に到達したらゲームオーバー
+  def game_over?
+    @tetorimino.stacked?
+  end
+
+  # ゲームをもう一度始める
+  def restart
+    @field = Field.new
+    @tetorimino = Tetorimino.create(@field)
+    @display.draw(@field, @tetorimino)
+  end
+
+  # ゲームオーバー処理
+  def game_over!
+    @field.paint Curses::COLOR_WHITE
+    @tetorimino.paint Curses::COLOR_WHITE
+    @display.draw(@field, @tetorimino)
   end
 end

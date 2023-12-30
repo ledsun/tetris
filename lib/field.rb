@@ -32,6 +32,12 @@ class Field
     self[block.y, block.x].block = block
   end
 
+  def paint(color)
+    cells_each do |cell|
+      cell.paint color
+    end
+  end
+
   private
 
   def wall?(x, y)

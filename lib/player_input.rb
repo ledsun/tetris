@@ -15,6 +15,7 @@ class PlayerInput
   def from_key
     case Curses.getch
     when 'q' then :quit
+    when 'r' then :restart
     when Curses::Key::UP then :rotate
     end
   end
