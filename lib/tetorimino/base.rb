@@ -25,6 +25,8 @@ module Tetorimino
       end
     end
 
+    def landed? = @is_landed
+
     private
 
     def rotate
@@ -46,9 +48,16 @@ module Tetorimino
         @y += 1
         if collision?
           @y -= 1
-          @is_landed = true
+          landing
         end
       end
+    end
+
+    # 着地処理
+    # 着地したらフィールドに自身のブロックを追加する
+    def landing
+      @is_landed = true
+      blocks { @field.add_block _1 }
     end
 
     # 衝突判定

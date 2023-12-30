@@ -28,6 +28,10 @@ class Field
     @grid[y][x]
   end
 
+  def add_block(block)
+    self[block.y, block.x].block = block
+  end
+
   private
 
   def wall?(x, y)

@@ -20,6 +20,11 @@ class Game
       # ゲーム終了
       break if input == :quit
 
+      # テトリミノが着地したら新しいテトリミノを生成
+      if @tetorimino.landed?
+        @tetorimino = Tetorimino.create(@field)
+      end
+
       # テトリミノを更新
       @tetorimino.update(input)
 
