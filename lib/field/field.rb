@@ -7,7 +7,7 @@ class Field
   def initialize
     @grid = Array.new(HEIGHT) do |y|
       Array.new(WIDTH) do |x|
-        if x == 0 || x == 11 || y == 0 || y == 21
+        if wall?(x, y)
           Wall.new(x, y)
         else
           Cell.new(x, y)
@@ -22,5 +22,11 @@ class Field
         yield cell
       end
     end
+  end
+
+  private
+
+  def wall?(x, y)
+    x == 0 || x == 11 || y == 0 || y == 21
   end
 end
