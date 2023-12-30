@@ -1,6 +1,6 @@
 module Tetorimino
   class Base
-    FRAMES_TO_FALL = 1
+    FRAMES_TO_FALL = 50
 
     def initialize(field, color, shape_map)
       @field = field
