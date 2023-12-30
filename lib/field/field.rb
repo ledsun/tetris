@@ -1,11 +1,13 @@
 require_relative 'wall'
 
 class Field
+  HEIGHT = 22
+  WIDTH = 12
   attr_reader :grid
 
   def initialize
-    @grid = Array.new(22) do |y|
-      Array.new(12) do |x|
+    @grid = Array.new(HEIGHT) do |y|
+      Array.new(WIDTH) do |x|
         if x == 0 || x == 11 || y == 0 || y == 21
           Wall.new(x, y)
         else
