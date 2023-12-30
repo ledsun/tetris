@@ -26,12 +26,12 @@ class Display
   private
 
   def draw_field(field)
-    field.cells { |cell| draw_block(cell) if cell.render? }
+    field.cells { |cell| draw_block(cell) if cell.has_block? }
   end
 
   def draw_block(cell)
     Curses.setpos(cell.y, cell.x * 2)
-    Curses.attrset(Curses.color_pair(cell.color))
+    Curses.attrset(Curses.color_pair(cell.block_color))
     Curses.addstr(SQUARE)
   end
 end
