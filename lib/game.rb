@@ -1,12 +1,14 @@
 require_relative 'player_input'
-require_relative 'field/field'
+require_relative 'field'
 require_relative 'display'
+require_relative 'tetorimino'
 
 class Game
   def initialize
     @player_input = PlayerInput.new
     @field = Field.new
     @display = Display.new
+    @tetorimino = Tetorimino.create(@field)
   end
 
   def run
@@ -17,10 +19,12 @@ class Game
 
       # ゲーム終了
       break if input == :quit
-      puts input
+
+      # テトリミノを更新
+      @tetorimino.update
 
       # フィールドを描画
-      @display.draw(@field)
+      @display.draw(@field, @tetorimino)
 
       # 1フレーム待つ
       sleep 1/60.0

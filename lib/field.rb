@@ -1,4 +1,4 @@
-require_relative 'wall'
+require_relative 'field/wall'
 
 # ゲームの盤面を表すクラス
 class Field
@@ -24,6 +24,10 @@ class Field
         yield cell
       end
     end
+  end
+
+  def [](y, x)
+    @grid[y][x]
   end
 
   private

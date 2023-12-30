@@ -5,7 +5,6 @@ class Wall < Cell
   def initialize(x, y)
     super(x, y)
     @block_color = 94 # Brown
+    @block = Block.new(@block_color, x, y)
   end
-
-  def has_block? = true
 end
