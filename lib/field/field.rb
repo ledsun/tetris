@@ -16,8 +16,4 @@ class Field
       end
     end
   end
-
-  def cell_at(x, y)
-    @grid[y][x]
-  end
 end
