@@ -28,7 +28,7 @@ class Display
   def draw_field(field)
     field.grid.each_with_index do |row, y|
       row.each_with_index do |cell, x|
-        draw_block(cell, x, y) if cell.has_block
+        draw_block(cell, x, y) if cell.render?
       end
     end
   end

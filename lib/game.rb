@@ -1,5 +1,5 @@
 require_relative 'player_input'
-require_relative 'field'
+require_relative 'field/field'
 require_relative 'display'
 
 class Game
