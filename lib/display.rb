@@ -26,15 +26,11 @@ class Display
   private
 
   def draw_field(field)
-    field.grid.each_with_index do |row, y|
-      row.each_with_index do |cell, x|
-        draw_block(cell, x, y) if cell.render?
-      end
-    end
+    field.cells { |cell| draw_block(cell) if cell.render? }
   end
 
-  def draw_block(cell ,x, y)
-    Curses.setpos(y, x * 2)
+  def draw_block(cell)
+    Curses.setpos(cell.y, cell.x * 2)
     Curses.attrset(Curses.color_pair(cell.color))
     Curses.addstr(SQUARE)
   end

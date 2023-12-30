@@ -3,7 +3,6 @@ require_relative 'wall'
 class Field
   HEIGHT = 22
   WIDTH = 12
-  attr_reader :grid
 
   def initialize
     @grid = Array.new(HEIGHT) do |y|
@@ -13,6 +12,14 @@ class Field
         else
           Cell.new(x, y)
         end
+      end
+    end
+  end
+
+  def cells
+    @grid.each do |row|
+      row.each do |cell|
+        yield cell
       end
     end
   end
