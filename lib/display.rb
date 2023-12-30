@@ -24,10 +24,10 @@ class Display
   def draw(field, tetorimino)
     # 画面をクリア
     Curses.clear
-    # フィールドの描画
-    draw_field(field)
-    # テトリミノの描画
-    draw_tetorimino(tetorimino)
+    # フィールドのブロック描画
+    field.blocks { draw_block _1 }
+    # テトリミノのブロック描画
+    tetorimino.blocks { draw_block _1 }
     # 画面に変更を反映
     Curses.refresh
   end
@@ -38,21 +38,6 @@ class Display
   end
 
   private
-
-  # フィールドの描画
-  def draw_field(field)
-    field.cells do |cell|
-      # セルにブロックがあれば描画する
-      draw_block(cell.block) if cell.block
-    end
-  end
-
-  # テトリミノの描画
-  def draw_tetorimino(tetorimino)
-    tetorimino.blocks do |block|
-      draw_block(block)
-    end
-  end
 
   # ブロックの描画
   def draw_block(block)

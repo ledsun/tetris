@@ -18,11 +18,9 @@ class Field
     end
   end
 
-  def cells
-    @grid.each do |row|
-      row.each do |cell|
-        yield cell
-      end
+  def blocks
+    cells_each do |cell|
+      yield cell.block if cell.block
     end
   end
 
@@ -34,5 +32,13 @@ class Field
 
   def wall?(x, y)
     x == 0 || x == 11 || y == 0 || y == 21
+  end
+
+  def cells_each
+    @grid.each do |row|
+      row.each do |cell|
+        yield cell
+      end
+    end
   end
 end
