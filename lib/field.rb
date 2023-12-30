@@ -18,7 +18,8 @@ class Field
     end
   end
 
-  def blocks
+  # フィールドのブロックを一つずつ処理します。
+  def blocks_each
     cells_each do |cell|
       yield cell.block if cell.block
     end

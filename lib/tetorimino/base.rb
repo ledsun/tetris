@@ -1,6 +1,6 @@
 module Tetorimino
   class Base
-    FRAMES_TO_FALL = 50
+    FRAMES_TO_FALL = 1
 
     def initialize(field, color, shape_map)
       @field = field
@@ -19,8 +19,8 @@ module Tetorimino
       fall unless @is_landed
     end
 
-    # ブロックを返す
-    def blocks
+    # ブロック毎に処理を行う
+    def blocks_each
       shape_map_each do |block, x, y|
         yield Block.new(@color, @x + x, @y + y) if block == 1
       end
@@ -63,7 +63,7 @@ module Tetorimino
     # 着地したらフィールドに自身のブロックを追加する
     def landing
       @is_landed = true
-      blocks { @field.add_block _1 }
+      blocks_each { @field.add_block _1 }
     end
 
     # 衝突判定
