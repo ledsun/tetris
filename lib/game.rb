@@ -26,15 +26,15 @@ class Game
         next
       end
 
+      # テトリミノを更新
+      @tetorimino.update(input)
+
       # テトリミノが着地したら新しいテトリミノを生成
       if @tetorimino.landed?
         @tetorimino = Tetorimino.create(@field)
         # ゲームオーバー判定
         next game_over! if game_over?
       end
-
-      # テトリミノを更新
-      @tetorimino.update(input)
 
       # フィールドを描画
       @display.draw(@field, @tetorimino)
