@@ -1,4 +1,5 @@
 require_relative 'field/wall'
+require_relative 'field/row'
 
 # ゲームの盤面を表すクラス
 class Field
@@ -7,15 +8,7 @@ class Field
   WIDTH = 12
 
   def initialize
-    @grid = Array.new(HEIGHT) do |y|
-      Array.new(WIDTH) do |x|
-        if wall?(x, y)
-          Wall.new(x, y)
-        else
-          Cell.new(x, y)
-        end
-      end
-    end
+    @grid = Array.new(HEIGHT) { |y| Row.new(y, WIDTH) }
   end
 
   # フィールドのブロックを一つずつ処理します。
@@ -34,16 +27,30 @@ class Field
   end
 
   def paint(color)
-    cells_each do |cell|
-      cell.paint color
+    cells_each { |cell| cell.paint color }
+  end
+
+  def clear_lines!
+    # フィールドの上から順番に行を見ていく
+    in_field_rows.each do |row|
+      # 行が揃っているかを判定する
+      next unless row.filled?
+
+      # 揃っていたらその行を消す
+      row.clear!
+
+      # 揃った行のひとつ上の行から昇順に、その行のブロックを下に落としていく
+      @grid.slice(1, row.y).reverse_each do |upper_row|
+        upper_row.down_cells self
+      end
     end
   end
 
-  private
-
-  def wall?(x, y)
-    x == 0 || x == 11 || y == 0 || y == 21
+  def down_cell_of(cell)
+    self[cell.y + 1, cell.x]
   end
+
+  private
 
   def cells_each
     @grid.each do |row|
@@ -51,5 +58,9 @@ class Field
         yield cell
       end
     end
+  end
+
+  def in_field_rows
+    @grid.select { |row| row.is_in_field }
   end
 end

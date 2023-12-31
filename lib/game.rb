@@ -29,8 +29,11 @@ class Game
       # テトリミノを更新
       @tetorimino.update(input)
 
-      # テトリミノが着地したら新しいテトリミノを生成
+      # テトリミノが着地したら
       if @tetorimino.landed?
+        # 行が揃ったら消す
+        @field.clear_lines!
+        # 新しいテトリミノを生成
         @tetorimino = Tetorimino.create(@field)
         # ゲームオーバー判定
         next game_over! if game_over?
