@@ -41,7 +41,7 @@ class Field
     # 下から順番にずらす
     # 上からずらすと、ずらしたブロックがずらす前のブロックと衝突してしまう
     y = filled_rows.last.y
-    in_field_blocks(y).reverse.each { |block| block.down filled_rows.size, self }
+    in_field_blocks_over(y).reverse.each { |block| block.down filled_rows.size, self }
   rescue => e
     raise "#{self.inspect}\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
@@ -68,11 +68,11 @@ class Field
     @rows.select { |row| row.is_in_field }
   end
 
-  def in_field_cells(y)
+  def in_field_cells_over(y)
     in_field_rows.select { |row| row.y < y }.flat_map(&:in_field_cells)
   end
 
-  def in_field_blocks(y)
-    in_field_cells(y).map(&:block).compact
+  def in_field_blocks_over(y)
+    in_field_cells_over(y).map(&:block).compact
   end
 end
