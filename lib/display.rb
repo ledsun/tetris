@@ -60,9 +60,9 @@ class Display
     in :yellow
       Curses::COLOR_YELLOW
     in :cyan
-      14 # シアンだと青と見分けにいので、明るいシアンにします。
+      14 # 青と見分けやすくするために明るい色を使う
     in :blue
-      Curses::COLOR_BLUE
+      20 # シアンと見分けやすくするために暗い色を使う
     in :white
       Curses::COLOR_WHITE
     end
