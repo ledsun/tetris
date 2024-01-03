@@ -12,21 +12,25 @@ class Cell
     @field = field
   end
 
-  # セルを塗りつぶします。
-  # ゲームオーバー時に使います。
-  def bang!
-    @block = Block.new(:white, @x, @y, @field)
+  # ブロックを追加します。
+  # テトリミノが着地したときに、テトリミノのもつブロックを受け取ります。
+  def block=(block)
+    raise "position is not match" unless match_position?(block)
+    @block = block
   end
 
+  # ブロックをn行下に移動します。
+  # テトリミノが着地し、行が消えたときに使います。
   def down_block(n)
     return unless @block
 
     move_to @field[@y + n, @x]
   end
 
-  def block=(block)
-    raise "position is not match" unless match_position?(block)
-    @block = block
+  # セルを塗りつぶします。
+  # ゲームオーバー時に使います。
+  def bang!
+    @block = Block.new(:white, @x, @y, @field)
   end
 
   def inspect
