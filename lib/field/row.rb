@@ -1,9 +1,7 @@
 
 # ゲームの盤面の一行を表すクラス
 class Row
-  include Enumerable
-
-  attr_reader :is_in_field, :y, :cells
+  attr_reader :y, :cells, :is_in_field
 
   def initialize(y, width, field)
     @y = y
