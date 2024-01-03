@@ -31,23 +31,29 @@ class Field
   end
 
   def clear_lines!
-    # フィールドの上から順番に行を見ていく
-    in_field_rows.each do |row|
-      # 行が揃っているかを判定する
-      next unless row.filled?
+    filled_rows = in_field_rows.select { |row| row.filled? }
+    return if filled_rows.empty?
 
-      # 揃っていたらその行を消す
-      row.clear!
+    filled_rows.each { |row| row.clear! }
 
-      # 揃った行のひとつ上の行から昇順に、その行のブロックを下に落としていく
-      @grid.slice(1, row.y).reverse_each do |upper_row|
-        upper_row.down_cells self
+    cells_with_block = []
+    each_cells do |cell|
+      if cell.block && cell.instance_of?(Cell)
+        cells_with_block << cell
       end
     end
+
+#raise "#{cells_with_block.inspect}, #{filled_rows.inspect}, #{self.inspect}"
+
+    cells_with_block.reverse.each { |cell| cell.down(filled_rows.size, self) }
   end
 
-  def down_cell_of(cell)
-    self[cell.y + 1, cell.x]
+  def down_cell_of(cell, n)
+    self[cell.y + n, cell.x]
+  end
+
+  def inspect
+    @grid.map(&:inspect).join("\n")
   end
 
   private

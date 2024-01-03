@@ -29,6 +29,10 @@ class Row
     in_field_cells.each { |cell| cell.down_block(field) }
   end
 
+  def inspect
+    "#{@y} #{@cells.map{ _1.block ? '■' : '□' }.join}"
+  end
+
   def [](x) =@cells[x]
   def each = @cells.each { |cell| yield cell }
 

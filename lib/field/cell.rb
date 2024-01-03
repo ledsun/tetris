@@ -15,10 +15,22 @@ class Cell
     @block = Block.new(color, @x, @y)
   end
 
-  def down_block(field)
+  def down_block(field, n)
     return unless @block
 
-    field.down_cell_of(self).recieve_block_from(self)
+    field.down_cell_of(self, n).recieve_block_from(self)
+  end
+
+  def down(n, field)
+    n.times { down_block(field, n) }
+  end
+
+  def inspect
+    if @block
+      "#{x},#{y} ■"
+    else
+      "#{x},#{y} □"
+    end
   end
 
   def recieve_block_from(other)

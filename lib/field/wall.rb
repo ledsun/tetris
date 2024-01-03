@@ -7,4 +7,6 @@ class Wall < Cell
     @block_color = 94 # Brown
     @block = Block.new(@block_color, x, y)
   end
+
+  def down(n, field) = nil
 end
