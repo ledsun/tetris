@@ -2,6 +2,16 @@ module Tetorimino
   class Base
     FRAMES_TO_FALL = 50
 
+    # shape_map: ブロックの形を表す2次元配列
+    # 0: ブロックなし
+    # 1: ブロックあり
+    # 例: O字形テトリミノをあらわす配列
+    #  [
+    #    [0, 0, 0, 0],
+    #    [0, 1, 1, 0],
+    #    [0, 1, 1, 0],
+    #    [0, 0, 0, 0]
+    #  ]
     def initialize(field, color, shape_map)
       @field = field
       @color = color
@@ -24,8 +34,8 @@ module Tetorimino
 
     # ブロック毎に処理を行う
     def each_blocks
-      each_shape_map do |block, x, y|
-        yield Block.new(@color, @x + x, @y + y) if block == 1
+      each_shape_map do |block_flag, x, y|
+        yield Block.new(@color, @x + x, @y + y) if block_flag == 1
       end
     end
 
@@ -93,8 +103,8 @@ module Tetorimino
 
     # 衝突判定
     def collision?
-      each_shape_map do |block, x, y|
-        next if block == 0
+      each_shape_map do |block_flag, x, y|
+        next if block_flag == 0
         if @field[@y + y, @x + x].block
           return true
         end
@@ -103,10 +113,11 @@ module Tetorimino
     end
 
     # ブロックの形を表す配列をブロック毎に処理する
+    # ブロックがある場所には1が、ない場所には0が入っている
     def each_shape_map
       @shape_map.each_with_index do |row, y|
-        row.each_with_index do |block, x|
-          yield block, x, y
+        row.each_with_index do |block_flag, x|
+          yield block_flag, x, y
         end
       end
     end
