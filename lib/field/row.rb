@@ -25,9 +25,7 @@ class Row
     in_field_cells.each { |cell| cell.block = nil }
   end
 
-  def down_cells(field)
-    in_field_cells.each { |cell| cell.down_block(field) }
-  end
+  def in_field_cells = @cells.reject { |cell| cell.is_a? Wall }
 
   def inspect
     "#{@y} #{@cells.map{ _1.block ? '■' : '□' }.join}"
@@ -38,6 +36,5 @@ class Row
 
   private
 
-  def in_field_cells = @cells.reject { |cell| cell.is_a? Wall }
   def wall?(x, y) = x == 0 || x == 11 || y == 0 || y == 21
 end

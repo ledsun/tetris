@@ -1,4 +1,4 @@
-Block = Data.define(:color, :x, :y)
+require_relative 'block'
 
 # フィールドのセルを表すクラス
 # セルにブロックがあると、四角を表示します。
@@ -15,14 +15,15 @@ class Cell
     @block = Block.new(color, @x, @y)
   end
 
-  def down_block(field, n)
+  def down(n, field)
     return unless @block
 
-    field.down_cell_of(self, n).recieve_block_from(self)
+    move_to field.nth_cell_down(n, self)
   end
 
-  def down(n, field)
-    n.times { down_block(field, n) }
+  def block=(block)
+    raise "position is not match" unless match_position?(block)
+    @block = block
   end
 
   def inspect
@@ -33,19 +34,14 @@ class Cell
     end
   end
 
-  def recieve_block_from(other)
-    raise 'other cell has no block' unless other.block
-
-    @block = Block.new(other.block.color, @x, @y)
-    other.block = nil
-  end
-
-  def block=(block)
-    raise "position is not match" unless match_position?(block)
-    @block = block
-  end
-
   private
+
+  def move_to(other)
+    raise 'other cell has block' if other.block
+
+    other.block = Block.new(@block.color, other.x, other.y)
+    @block = nil
+  end
 
   def match_position?(block)
     return true unless block

@@ -34,21 +34,15 @@ class Field
     filled_rows = in_field_rows.select { |row| row.filled? }
     return if filled_rows.empty?
 
+    # 埋まった行を消す
     filled_rows.each { |row| row.clear! }
 
-    cells_with_block = []
-    each_cells do |cell|
-      if cell.block && cell.instance_of?(Cell)
-        cells_with_block << cell
-      end
-    end
-
-#raise "#{cells_with_block.inspect}, #{filled_rows.inspect}, #{self.inspect}"
-
-    cells_with_block.reverse.each { |cell| cell.down(filled_rows.size, self) }
+    # インフィールド内のすべてのブロックを消した行分下にずらす
+    blocks = in_field_rows.flat_map(&:in_field_cells).map(&:block).compact
+    blocks.reverse.each { |block| block.down filled_rows.size, self }
   end
 
-  def down_cell_of(cell, n)
+  def nth_cell_down(n, cell)
     self[cell.y + n, cell.x]
   end
 
