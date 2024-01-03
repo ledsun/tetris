@@ -65,6 +65,8 @@ class Display
       20 # シアンと見分けやすくするために暗い色を使う
     in :white
       Curses::COLOR_WHITE
+    in :green
+      Curses::COLOR_GREEN
     end
   end
 end
