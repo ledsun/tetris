@@ -68,11 +68,11 @@ class Field
   end
 
   def in_field_rows
-    @rows.select { |row| row.is_in_field }
+    @rows.select { _1.is_in_field }
   end
 
   def in_field_cells_over(y)
-    in_field_rows.select { |row| row.y < y }.flat_map(&:in_field_cells)
+    in_field_rows.select { _1.y < y }.flat_map(&:in_field_cells)
   end
 
   def in_field_blocks_over(y)
