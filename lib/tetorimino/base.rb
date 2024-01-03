@@ -32,11 +32,11 @@ module Tetorimino
       fall unless @is_landed
     end
 
-    # ブロック毎に処理を行う
-    def each_blocks
-      each_shape_map do |block_flag, x, y|
-        yield Block.new(@color, @x + x, @y + y, @field) if block_flag == 1
-      end
+    # 含まれるブロックを返す
+    def blocks
+      blocks = []
+      each_blocks { blocks << _1 }
+      blocks
     end
 
     # ブロックを塗りつぶします。
@@ -100,7 +100,7 @@ module Tetorimino
     # 着地したらフィールドに自身のブロックを追加する
     def landing
       @is_landed = true
-      each_blocks { |block| @field.recieves block }
+      blocks.each { |block| @field.recieves block }
     end
 
     # 衝突判定
@@ -112,6 +112,13 @@ module Tetorimino
         end
       end
       false
+    end
+
+    # ブロック毎に処理を行う
+    def each_blocks
+      each_shape_map do |block_flag, x, y|
+        yield Block.new(@color, @x + x, @y + y, @field) if block_flag == 1
+      end
     end
 
     # ブロックの形を表す配列をブロック毎に処理する
