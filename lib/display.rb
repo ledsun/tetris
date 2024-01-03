@@ -53,14 +53,14 @@ class Display
   # 色をシンボルから数値に変換する
   def color_to_i(color)
     case color
-    in :brown
-      94
+    in :magenta
+      Curses::COLOR_MAGENTA
     in :red
       Curses::COLOR_RED
     in :yellow
       Curses::COLOR_YELLOW
-    in :paleBlue
-      6
+    in :cyan
+      14 # シアンだと青と見分けにいので、明るいシアンにします。
     in :blue
       Curses::COLOR_BLUE
     in :white

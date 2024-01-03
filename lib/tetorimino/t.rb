@@ -5,7 +5,7 @@ module Tetorimino
   class T < Base
     def initialize(field)
       super field,
-            :paleBlue,
+            :magenta,
             [
               [0, 0, 0, 0],
               [1, 1, 1, 0],
