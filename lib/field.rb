@@ -8,7 +8,7 @@ class Field
   WIDTH = 12
 
   def initialize
-    @rows = Array.new(HEIGHT) { |y| Row.new(y, WIDTH) }
+    @rows = Array.new(HEIGHT) { |y| Row.new(y, WIDTH, self) }
   end
 
   # フィールドのブロックを一つずつ処理します。
@@ -41,7 +41,7 @@ class Field
     # 下から順番にずらす
     # 上からずらすと、ずらしたブロックがずらす前のブロックと衝突してしまう
     y = filled_rows.last.y
-    in_field_blocks_over(y).reverse.each { |block| block.down filled_rows.size, self }
+    in_field_blocks_over(y).reverse.each { _1.down filled_rows.size }
   rescue => e
     raise "#{self.inspect}\n#{e.message}\n#{e.backtrace.join("\n")}"
   end

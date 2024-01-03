@@ -6,19 +6,20 @@ require_relative 'block'
 class Cell
   attr_reader :x, :y, :block
 
-  def initialize(x, y)
+  def initialize(x, y, field)
     @x = x
     @y = y
+    @field = field
   end
 
   def paint(color)
-    @block = Block.new(color, @x, @y)
+    @block = Block.new(color, @x, @y, @field)
   end
 
-  def down_block(n, field)
+  def down_block(n)
     return unless @block
 
-    move_to field.nth_cell_down(n, self)
+    move_to @field.nth_cell_down(n, self)
   end
 
   def block=(block)
@@ -39,7 +40,7 @@ class Cell
   def move_to(other)
     raise "Move block from #{self.inspect}. #{other.inspect} has block " if other.block
 
-    other.block = Block.new(@block.color, other.x, other.y)
+    other.block = Block.new(@block.color, other.x, other.y, @field)
     @block = nil
   end
 

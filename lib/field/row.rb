@@ -5,13 +5,13 @@ class Row
 
   attr_reader :is_in_field, :y
 
-  def initialize(y, width)
+  def initialize(y, width, field)
     @y = y
     @cells = Array.new(width) do |x|
       if wall?(x, y)
-        Wall.new(x, y)
+        Wall.new(x, y, field)
       else
-        Cell.new(x, y)
+        Cell.new(x, y, field)
       end
     end
     @is_in_field = !wall?(1, y)

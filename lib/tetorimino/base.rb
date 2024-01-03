@@ -35,7 +35,7 @@ module Tetorimino
     # ブロック毎に処理を行う
     def each_blocks
       each_shape_map do |block_flag, x, y|
-        yield Block.new(@color, @x + x, @y + y) if block_flag == 1
+        yield Block.new(@color, @x + x, @y + y, @field) if block_flag == 1
       end
     end
 
