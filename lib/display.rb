@@ -55,8 +55,8 @@ class Display
     case color
     in :magenta
       Curses::COLOR_MAGENTA
-    in :red
-      Curses::COLOR_RED
+    in :orange
+      208
     in :yellow
       Curses::COLOR_YELLOW
     in :cyan
