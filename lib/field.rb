@@ -37,10 +37,13 @@ class Field
     # 埋まった行を消す
     filled_rows.each { |row| row.clear! }
 
-    # インフィールド内のすべてのブロックを消した行分下にずらす
+    # 消した行より上の、インフィールド内のすべてのブロックを消した行分下にずらす
     # 下から順番にずらす
     # 上からずらすと、ずらしたブロックがずらす前のブロックと衝突してしまう
-    in_field_blocks.reverse.each { |block| block.down filled_rows.size, self }
+    y = filled_rows.last.y
+    in_field_blocks(y).reverse.each { |block| block.down filled_rows.size, self }
+  rescue => e
+    raise "#{self.inspect}\n#{e.message}\n#{e.backtrace.join("\n")}"
   end
 
   def nth_cell_down(n, cell)
@@ -65,11 +68,11 @@ class Field
     @grid.select { |row| row.is_in_field }
   end
 
-  def in_field_cells
-    in_field_rows.flat_map(&:in_field_cells)
+  def in_field_cells(y)
+    in_field_rows.select { |row| row.y < y }.flat_map(&:in_field_cells)
   end
 
-  def in_field_blocks
-    in_field_cells.map(&:block).compact
+  def in_field_blocks(y)
+    in_field_cells(y).map(&:block).compact
   end
 end

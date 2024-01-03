@@ -37,7 +37,7 @@ class Cell
   private
 
   def move_to(other)
-    raise 'other cell has block' if other.block
+    raise "Move block from #{self.inspect}. #{other.inspect} has block " if other.block
 
     other.block = Block.new(@block.color, other.x, other.y)
     @block = nil
