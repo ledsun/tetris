@@ -11,7 +11,7 @@ class Row
       else
         Cell.new(x, y, field)
       end
-    end
+    end.freeze
     @is_in_field = !wall?(1, y)
   end
 
