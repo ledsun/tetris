@@ -31,8 +31,8 @@ class Field
 
   # すべてのセルを塗りつぶします。
   # ゲームオーバー時に使います。
-  def paint(color)
-    each_cells { |cell| cell.paint color }
+  def bang_all_cells!
+    each_cells { |cell| cell.bang! }
   end
 
   # 揃った行を消し、上の行を下にずらします。

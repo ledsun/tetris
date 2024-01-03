@@ -39,8 +39,10 @@ module Tetorimino
       end
     end
 
-    def paint(color)
-      @color = color
+    # ブロックを塗りつぶします。
+    # ゲームオーバー時に使います。
+    def bang!
+      @color = :white
     end
 
     def landed? = @is_landed

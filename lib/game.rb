@@ -65,8 +65,8 @@ class Game
 
   # ゲームオーバー処理
   def game_over!
-    @field.paint :white
-    @tetorimino.paint :white
+    @field.bang_all_cells!
+    @tetorimino.bang!
     @display.draw(@field, @tetorimino)
   end
 end

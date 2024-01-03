@@ -12,8 +12,10 @@ class Cell
     @field = field
   end
 
-  def paint(color)
-    @block = Block.new(color, @x, @y, @field)
+  # セルを塗りつぶします。
+  # ゲームオーバー時に使います。
+  def bang!
+    @block = Block.new(:white, @x, @y, @field)
   end
 
   def down_block(n)
