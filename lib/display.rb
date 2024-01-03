@@ -1,7 +1,20 @@
 require 'curses'
 
 class Display
+  # ブロックを表す文字
   SQUARE = '■'
+  # 色一覧
+  COLOR_MAP = {
+    cyan: 14,
+    blue: 20,
+    orange: 208,
+    yellow: Curses::COLOR_YELLOW,
+    green: Curses::COLOR_GREEN,
+    purple: 93,
+    red: Curses::COLOR_RED,
+    brown: 94,
+    white: Curses::COLOR_WHITE
+  }
 
   def initialize
     # cursesによる画面制御の開始
@@ -10,13 +23,10 @@ class Display
     Curses.start_color
     # 端末のデフォルトの前景色と背景色を使用するように設定
     Curses.use_default_colors
-
-    # カラーペアを初期化するためのループ
-    # cursesは256色をサポートしているので、それぞれのペアを設定する
-    (0..255).each do |i|
-      # 同じ前景色とデフォルトの背景色を持つカラーペアを初期化する
+    # COLOR_MAPで使う色をすべて、cursesのカラーペアとして初期化する
+    COLOR_MAP.values.each do |color|
       # 引数:1番目はペア番号、2番目は前景色、3番目は背景色(-1はデフォルトの背景色)
-      Curses.init_pair(i, i, -1)
+      Curses.init_pair(color, color, -1)
     end
   end
 
@@ -45,32 +55,8 @@ class Display
     # x軸の値をそのまま使うと詰まった様な印象の画面になるので2倍する
     Curses.setpos(block.y, block.x * 2)
     # カラーペアを適用する
-    Curses.attrset(Curses.color_pair(color_to_i(block.color)))
+    Curses.attrset(Curses.color_pair(COLOR_MAP[block.color]))
      # ブロックを描画する
     Curses.addstr(SQUARE)
-  end
-
-  # 色をシンボルから数値に変換する
-  def color_to_i(color)
-    case color
-    in :cyan
-      14 # 青と見分けやすくするために明るい色を使う
-    in :blue
-      20 # シアンと見分けやすくするために暗い色を使う
-    in :orange
-      208
-    in :yellow
-      Curses::COLOR_YELLOW
-    in :green
-      Curses::COLOR_GREEN
-    in :purple
-      93
-    in :red
-      Curses::COLOR_RED
-    in :brown
-      94
-    in :white
-      Curses::COLOR_WHITE
-    end
   end
 end
