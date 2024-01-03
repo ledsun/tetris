@@ -12,8 +12,8 @@ class Field
   end
 
   # フィールドのブロックを一つずつ処理します。
-  def blocks_each
-    cells_each do |cell|
+  def each_blocks
+    each_cells do |cell|
       yield cell.block if cell.block
     end
   end
@@ -27,7 +27,7 @@ class Field
   end
 
   def paint(color)
-    cells_each { |cell| cell.paint color }
+    each_cells { |cell| cell.paint color }
   end
 
   def clear_lines!
@@ -52,7 +52,7 @@ class Field
 
   private
 
-  def cells_each
+  def each_cells
     @grid.each do |row|
       row.each do |cell|
         yield cell

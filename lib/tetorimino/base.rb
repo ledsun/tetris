@@ -23,8 +23,8 @@ module Tetorimino
     end
 
     # ブロック毎に処理を行う
-    def blocks_each
-      shape_map_each do |block, x, y|
+    def each_blocks
+      each_shape_map do |block, x, y|
         yield Block.new(@color, @x + x, @y + y) if block == 1
       end
     end
@@ -88,12 +88,12 @@ module Tetorimino
     # 着地したらフィールドに自身のブロックを追加する
     def landing
       @is_landed = true
-      blocks_each { @field.add_block _1 }
+      each_blocks { @field.add_block _1 }
     end
 
     # 衝突判定
     def collision?
-      shape_map_each do |block, x, y|
+      each_shape_map do |block, x, y|
         next if block == 0
         if @field[@y + y, @x + x].block
           return true
@@ -103,7 +103,7 @@ module Tetorimino
     end
 
     # ブロックの形を表す配列をブロック毎に処理する
-    def shape_map_each
+    def each_shape_map
       @shape_map.each_with_index do |row, y|
         row.each_with_index do |block, x|
           yield block, x, y
