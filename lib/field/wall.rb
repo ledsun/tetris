@@ -7,6 +7,4 @@ class Wall < Cell
     @block_color = :brown
     @block = Block.new(@block_color, x, y, field)
   end
-
-  def down(n, field) = nil
 end
