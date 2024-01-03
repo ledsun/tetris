@@ -28,7 +28,7 @@ class Row
   def in_field_cells = @cells.reject { |cell| cell.is_a? Wall }
 
   def inspect
-    "#{@y} #{@cells.map{ _1.block ? '■' : '□' }.join}"
+    "%02d #{@cells.map{ _1.block ? '■' : '□' }.join}" % @y
   end
 
   def [](x) =@cells[x]
