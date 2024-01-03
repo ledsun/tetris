@@ -32,7 +32,7 @@ class Field
   # すべてのセルを塗りつぶします。
   # ゲームオーバー時に使います。
   def bang_all_cells!
-    each_cells { |cell| cell.bang! }
+    all_cells.each { _1.bang! }
   end
 
   # 揃った行を消し、上の行を下にずらします。
@@ -59,12 +59,8 @@ class Field
 
   private
 
-  def each_cells
-    @rows.each do |row|
-      row.each do |cell|
-        yield cell
-      end
-    end
+  def all_cells
+    @rows.flat_map(&:cells)
   end
 
   def in_field_rows

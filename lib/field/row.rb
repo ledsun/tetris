@@ -3,7 +3,7 @@
 class Row
   include Enumerable
 
-  attr_reader :is_in_field, :y
+  attr_reader :is_in_field, :y, :cells
 
   def initialize(y, width, field)
     @y = y
@@ -17,26 +17,35 @@ class Row
     @is_in_field = !wall?(1, y)
   end
 
+  # ブロックを返します。
   def blocks
     @cells.map(&:block).compact
   end
 
+  # 一行すべてにブロックがあるかどうかを返します。
+  # 行を消す判定に使います。
   def filled?
-    @cells.all? { |cell| cell.block }
+    @cells.all? { _1.block }
   end
 
+  # 一行の壁以外のすべてのブロックを消します。
   def clear!
-    in_field_cells.each { |cell| cell.block = nil }
+    in_field_cells.each { _1.block = nil }
   end
 
-  def in_field_cells = @cells.reject { |cell| cell.is_a? Wall }
+  # 一行の壁以外のすべてのセルを返します。
+  def in_field_cells
+    @cells.reject { _1.is_a? Wall }
+  end
+
+  # 指定位置のセルを返します。
+  def [](x)
+    @cells[x]
+  end
 
   def inspect
     "%02d #{@cells.map{ _1.block ? '■' : '□' }.join}" % @y
   end
-
-  def [](x) =@cells[x]
-  def each = @cells.each { |cell| yield cell }
 
   private
 
