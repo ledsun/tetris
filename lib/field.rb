@@ -8,7 +8,7 @@ class Field
   WIDTH = 12
 
   def initialize
-    @grid = Array.new(HEIGHT) { |y| Row.new(y, WIDTH) }
+    @rows = Array.new(HEIGHT) { |y| Row.new(y, WIDTH) }
   end
 
   # フィールドのブロックを一つずつ処理します。
@@ -19,7 +19,7 @@ class Field
   end
 
   def [](y, x)
-    @grid[y][x]
+    @rows[y][x]
   end
 
   def add_block(block)
@@ -51,13 +51,13 @@ class Field
   end
 
   def inspect
-    @grid.map(&:inspect).join("\n")
+    @rows.map(&:inspect).join("\n")
   end
 
   private
 
   def each_cells
-    @grid.each do |row|
+    @rows.each do |row|
       row.each do |cell|
         yield cell
       end
@@ -65,7 +65,7 @@ class Field
   end
 
   def in_field_rows
-    @grid.select { |row| row.is_in_field }
+    @rows.select { |row| row.is_in_field }
   end
 
   def in_field_cells(y)
