@@ -4,7 +4,7 @@ require_relative 'cell'
 class Wall < Cell
   def initialize(x, y, field)
     super(x, y, field)
-    @block_color = :white
+    @block_color = :brown
     @block = Block.new(@block_color, x, y, field)
   end
 

@@ -53,20 +53,24 @@ class Display
   # 色をシンボルから数値に変換する
   def color_to_i(color)
     case color
-    in :magenta
-      Curses::COLOR_MAGENTA
-    in :orange
-      208
-    in :yellow
-      Curses::COLOR_YELLOW
     in :cyan
       14 # 青と見分けやすくするために明るい色を使う
     in :blue
       20 # シアンと見分けやすくするために暗い色を使う
-    in :white
-      Curses::COLOR_WHITE
+    in :orange
+      208
+    in :yellow
+      Curses::COLOR_YELLOW
     in :green
       Curses::COLOR_GREEN
+    in :purple
+      93
+    in :red
+      Curses::COLOR_RED
+    in :brown
+      94
+    in :white
+      Curses::COLOR_WHITE
     end
   end
 end
