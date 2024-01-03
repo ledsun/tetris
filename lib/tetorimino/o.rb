@@ -1,3 +1,5 @@
+require_relative 'base'
+
 module Tetorimino
   class O < Base
     def initialize(field)

@@ -65,8 +65,8 @@ class Game
 
   # ゲームオーバー処理
   def game_over!
-    @field.paint Curses::COLOR_WHITE
-    @tetorimino.paint Curses::COLOR_WHITE
+    @field.paint :white
+    @tetorimino.paint :white
     @display.draw(@field, @tetorimino)
   end
 end

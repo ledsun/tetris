@@ -61,6 +61,10 @@ class Display
       Curses::COLOR_YELLOW
     in :paleBlue
       6
+    in :blue
+      Curses::COLOR_BLUE
+    in :white
+      Curses::COLOR_WHITE
     end
   end
 end
