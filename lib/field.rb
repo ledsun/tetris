@@ -11,25 +11,32 @@ class Field
     @rows = Array.new(HEIGHT) { |y| Row.new(y, WIDTH, self) }
   end
 
-  # フィールドのブロックを一つずつ処理します。
-  def each_blocks
-    each_cells do |cell|
-      yield cell.block if cell.block
-    end
-  end
-
+  # セルを取得します。
   def [](y, x)
     @rows[y][x]
   end
 
+  # 壁を含むすべてのブロックを処理します。
+  # ブロックを描画するときに使います。
+  def each_blocks
+    each_cells { yield _1.block if _1.block }
+  end
+
+  # セルにブロックを追加します。
+  # テトリミノが着地したときに使います。
+  # 追加するセルの位置は、ブロックの位置と同じです。
   def add_block(block)
     self[block.y, block.x].block = block
   end
 
+  # すべてのセルを塗りつぶします。
+  # ゲームオーバー時に使います。
   def paint(color)
     each_cells { |cell| cell.paint color }
   end
 
+  # 揃った行を消し、上の行を下にずらします。
+  # テトリミノが着地したときに呼び出します。
   def clear_lines!
     filled_rows = in_field_rows.select { |row| row.filled? }
     return if filled_rows.empty?
@@ -44,10 +51,6 @@ class Field
     in_field_blocks_over(y).reverse.each { _1.down filled_rows.size }
   rescue => e
     raise "#{self.inspect}\n#{e.message}\n#{e.backtrace.join("\n")}"
-  end
-
-  def nth_cell_down(n, cell)
-    self[cell.y + n, cell.x]
   end
 
   def inspect

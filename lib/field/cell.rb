@@ -19,7 +19,7 @@ class Cell
   def down_block(n)
     return unless @block
 
-    move_to @field.nth_cell_down(n, self)
+    move_to @field[@y + n, @x]
   end
 
   def block=(block)
