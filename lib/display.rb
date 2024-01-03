@@ -45,8 +45,22 @@ class Display
     # x軸の値をそのまま使うと詰まった様な印象の画面になるので2倍する
     Curses.setpos(block.y, block.x * 2)
     # カラーペアを適用する
-    Curses.attrset(Curses.color_pair(block.color))
+    Curses.attrset(Curses.color_pair(color_to_i(block.color)))
      # ブロックを描画する
     Curses.addstr(SQUARE)
+  end
+
+  # 色をシンボルから数値に変換する
+  def color_to_i(color)
+    case color
+    in :brown
+      94
+    in :red
+      Curses::COLOR_RED
+    in :yellow
+      Curses::COLOR_YELLOW
+    in :paleBlue
+      6
+    end
   end
 end

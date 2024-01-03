@@ -6,7 +6,7 @@ module Tetorimino
   class I < Base
     def initialize(field)
       super field,
-            Curses::COLOR_RED,
+            :red,
             [
               [0, 0, 0, 0],
               [1, 1, 1, 1],
