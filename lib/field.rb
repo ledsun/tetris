@@ -38,8 +38,9 @@ class Field
     filled_rows.each { |row| row.clear! }
 
     # インフィールド内のすべてのブロックを消した行分下にずらす
-    blocks = in_field_rows.flat_map(&:in_field_cells).map(&:block).compact
-    blocks.reverse.each { |block| block.down filled_rows.size, self }
+    # 下から順番にずらす
+    # 上からずらすと、ずらしたブロックがずらす前のブロックと衝突してしまう
+    in_field_blocks.reverse.each { |block| block.down filled_rows.size, self }
   end
 
   def nth_cell_down(n, cell)
@@ -62,5 +63,13 @@ class Field
 
   def in_field_rows
     @grid.select { |row| row.is_in_field }
+  end
+
+  def in_field_cells
+    in_field_rows.flat_map(&:in_field_cells)
+  end
+
+  def in_field_blocks
+    in_field_cells.map(&:block).compact
   end
 end

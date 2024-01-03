@@ -15,7 +15,7 @@ class Cell
     @block = Block.new(color, @x, @y)
   end
 
-  def down(n, field)
+  def down_block(n, field)
     return unless @block
 
     move_to field.nth_cell_down(n, self)

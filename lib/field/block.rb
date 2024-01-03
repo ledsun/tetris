@@ -9,6 +9,6 @@ class Block
 
   def down(n, field)
     cell = field[@y, @x]
-    cell.down(n, field)
+    cell.down_block(n, field)
   end
 end
