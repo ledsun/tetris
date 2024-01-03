@@ -25,8 +25,8 @@ class Field
   # セルにブロックを追加します。
   # テトリミノが着地したときに使います。
   # 追加するセルの位置は、ブロックの位置と同じです。
-  def recieves(block)
-    self[block.y, block.x].block = block
+  def receives(blocks)
+    blocks.each { self[_1.y, _1.x].block = _1 }
   end
 
   # すべてのセルを塗りつぶします。
