@@ -17,6 +17,10 @@ class Row
     @is_in_field = !wall?(1, y)
   end
 
+  def blocks
+    @cells.map(&:block).compact
+  end
+
   def filled?
     @cells.all? { |cell| cell.block }
   end

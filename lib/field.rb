@@ -16,10 +16,10 @@ class Field
     @rows[y][x]
   end
 
-  # 壁を含むすべてのブロックを処理します。
+  # 壁を含むすべてのブロックを取得します。
   # ブロックを描画するときに使います。
-  def each_blocks
-    each_cells { yield _1.block if _1.block }
+  def blocks
+    @rows.flat_map(&:blocks).compact
   end
 
   # セルにブロックを追加します。
