@@ -25,7 +25,7 @@ class Field
   # セルにブロックを追加します。
   # テトリミノが着地したときに使います。
   # 追加するセルの位置は、ブロックの位置と同じです。
-  def add_block(block)
+  def recieves(block)
     self[block.y, block.x].block = block
   end
 

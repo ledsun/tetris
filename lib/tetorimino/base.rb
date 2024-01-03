@@ -100,7 +100,7 @@ module Tetorimino
     # 着地したらフィールドに自身のブロックを追加する
     def landing
       @is_landed = true
-      each_blocks { @field.add_block _1 }
+      each_blocks { |block| @field.recieves block }
     end
 
     # 衝突判定
