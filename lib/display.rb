@@ -31,7 +31,7 @@ class Display
   end
 
   # フィールドの情報をもとに画面を描画する
-  def draw(field, tetorimino)
+  def draw(field, tetromino)
     # 画面をクリア
     Curses.clear
     # フィールドのブロック描画

@@ -1,4 +1,4 @@
-module Tetorimino
+module Tetromino
   class Base
     FRAMES_TO_FALL = 50
 

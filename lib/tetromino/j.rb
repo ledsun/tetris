@@ -1,15 +1,15 @@
 require_relative 'base'
 
-module Tetorimino
-  # I字型のテトリミノを表すクラス
-  class I < Base
+module Tetromino
+  # J字型のテトリミノを表すクラス
+  class J < Base
     def initialize(field)
       super field,
-            :cyan,
+            :blue,
             [
               [0, 0, 0, 0],
-              [1, 1, 1, 1],
-              [0, 0, 0, 0],
+              [1, 1, 1, 0],
+              [0, 0, 1, 0],
               [0, 0, 0, 0]
             ]
     end
