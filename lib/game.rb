@@ -59,7 +59,7 @@ class Game
   # ゲームをもう一度始める
   def restart
     @field = Field.new
-    @tetromino = tetromino.create(@field)
+    @tetromino = Tetromino.create(@field)
     @display.draw(@field, @tetromino)
   end
 

@@ -37,7 +37,7 @@ class Display
     # フィールドのブロック描画
     field.blocks.each { draw_block _1 }
     # テトリミノのブロック描画
-    tetorimino.blocks.each { draw_block _1 }
+    tetromino.blocks.each { draw_block _1 }
     # 画面に変更を反映
     Curses.refresh
   end
