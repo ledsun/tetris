@@ -1,6 +1,6 @@
 require_relative 'base'
 
-module Tetorimino
+module Tetromino
   # Z字型のテトリミノを表すクラス
   class Z < Base
     def initialize(field)

@@ -5,7 +5,7 @@
 ## 実行方法
 
 ```bash
-$ ruby tetoris.rb
+$ ruby tetris.rb
 ```
 
 ![screenshot](./screenshot.gif)

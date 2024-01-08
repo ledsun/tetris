@@ -1,14 +1,14 @@
 require_relative 'player_input'
 require_relative 'field'
 require_relative 'display'
-require_relative 'tetorimino'
+require_relative 'tetromino'
 
 class Game
   def initialize
     @player_input = PlayerInput.new
     @field = Field.new
     @display = Display.new
-    @tetorimino = Tetorimino.create(@field)
+    @tetromino = Tetromino.create(@field)
   end
 
   def run
@@ -27,20 +27,20 @@ class Game
       end
 
       # テトリミノを更新
-      @tetorimino.update(input)
+      @tetromino.update(input)
 
       # テトリミノが着地したら
-      if @tetorimino.landed?
+      if @tetromino.landed?
         # 行が揃ったら消す
         @field.clear_lines!
         # 新しいテトリミノを生成
-        @tetorimino = Tetorimino.create(@field)
+        @tetromino = Tetromino.create(@field)
         # ゲームオーバー判定
         next game_over! if game_over?
       end
 
       # フィールドを描画
-      @display.draw(@field, @tetorimino)
+      @display.draw(@field, @tetromino)
 
       # 1フレーム待つ
       sleep 1/60.0
@@ -51,22 +51,22 @@ class Game
 
   private
 
-  # tetoriminoがフィールドの上部に到達したらゲームオーバー
+  # tetrominoがフィールドの上部に到達したらゲームオーバー
   def game_over?
-    @tetorimino.stacked?
+    @tetromino.stacked?
   end
 
   # ゲームをもう一度始める
   def restart
     @field = Field.new
-    @tetorimino = Tetorimino.create(@field)
-    @display.draw(@field, @tetorimino)
+    @tetromino = tetromino.create(@field)
+    @display.draw(@field, @tetromino)
   end
 
   # ゲームオーバー処理
   def game_over!
     @field.bang_all_cells!
-    @tetorimino.bang!
-    @display.draw(@field, @tetorimino)
+    @tetromino.bang!
+    @display.draw(@field, @tetromino)
   end
 end
