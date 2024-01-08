@@ -20,27 +20,26 @@ class Game
       # ゲーム終了
       break if input == :quit
 
-      # ゲームオーバーしていたらリスタートできる
-      if game_over?
+      unless game_over?
+        # テトリミノを更新
+        @tetromino.update(input)
+
+        # テトリミノが着地したら
+        if @tetromino.landed?
+          # 行が揃ったら消す
+          @field.clear_lines!
+          # 新しいテトリミノを生成
+          @tetromino = Tetromino.create(@field)
+          # ゲームオーバー判定
+          next game_over! if game_over?
+        end
+
+        # フィールドを描画
+        @display.draw(@field, @tetromino)
+      else
+        # ゲームオーバーしていたらリスタートできる
         restart if input == :restart
-        next
       end
-
-      # テトリミノを更新
-      @tetromino.update(input)
-
-      # テトリミノが着地したら
-      if @tetromino.landed?
-        # 行が揃ったら消す
-        @field.clear_lines!
-        # 新しいテトリミノを生成
-        @tetromino = Tetromino.create(@field)
-        # ゲームオーバー判定
-        next game_over! if game_over?
-      end
-
-      # フィールドを描画
-      @display.draw(@field, @tetromino)
 
       # 1フレーム待つ
       sleep 1/60.0
