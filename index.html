@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris</title>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@ruby/head-wasm-wasi@2.4.1-2024-01-05-a/dist/browser.script.iife.js"></script>
+  <script type="text/ruby" data-eval="async">
+    require 'js/require_remote'
+    module Kernel
+      def require_relative(path) = JS::RequireRemote.instance.load(path)
+      def sleep(time) = JS.eval("return new Promise((resolve) => setTimeout(resolve, #{time * 1000}))").await
+    end
+
+    require_relative 'lib/game'
+    Game.new.run
+  </script>
+  <style>
+    #game {
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #field {
+      width: 384px;
+      height: 702px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      background-color: #000;
+      border: 1px solid #fff;
+    }
+
+    .wall {
+      width: 30px;
+      height: 30px;
+      background-color: brown;
+      border: 1px solid #fff;
+
+    }
+  </style>
+</head>
+
+<body>
+  <section id="game">
+    <div id="field">
+      <!-- There are 22 rows. -->
+      <div class="row" data-y="0">
+        <div class="wall" data-x="0"></div>
+        <div class="wall" data-x="1"></div>
+        <div class="wall" data-x="2"></div>
+        <div class="wall" data-x="3"></div>
+        <div class="wall" data-x="4"></div>
+        <div class="wall" data-x="5"></div>
+        <div class="wall" data-x="6"></div>
+        <div class="wall" data-x="7"></div>
+        <div class="wall" data-x="8"></div>
+        <div class="wall" data-x="9"></div>
+        <div class="wall" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="1">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="2">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="3">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="4">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="5">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="6">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="7">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="8">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="9">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="10">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="11">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="12">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="13">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="14">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="15">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="16">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="17">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="18">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="19">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="20">
+        <div class="wall" data-x="0"></div>
+        <div class="cell" data-x="1"></div>
+        <div class="cell" data-x="2"></div>
+        <div class="cell" data-x="3"></div>
+        <div class="cell" data-x="4"></div>
+        <div class="cell" data-x="5"></div>
+        <div class="cell" data-x="6"></div>
+        <div class="cell" data-x="7"></div>
+        <div class="cell" data-x="8"></div>
+        <div class="cell" data-x="9"></div>
+        <div class="cell" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+      <div class="row" data-y="21">
+        <div class="wall" data-x="0"></div>
+        <div class="wall" data-x="1"></div>
+        <div class="wall" data-x="2"></div>
+        <div class="wall" data-x="3"></div>
+        <div class="wall" data-x="4"></div>
+        <div class="wall" data-x="5"></div>
+        <div class="wall" data-x="6"></div>
+        <div class="wall" data-x="7"></div>
+        <div class="wall" data-x="8"></div>
+        <div class="wall" data-x="9"></div>
+        <div class="wall" data-x="10"></div>
+        <div class="wall" data-x="11"></div>
+      </div>
+    </div>
+  </section>
+
+</body>
+
+</html>

@@ -1,25 +1,20 @@
-require 'curses'
-
 class PlayerInput
   def initialize
-    # キー入力をエコー表示しない
-    Curses.noecho
-    # getchを非ブロッキングモードにする
-    Curses.stdscr.nodelay = 1
-    # 矢印キーを有効にする
-    Curses.stdscr.keypad(true)
-    # カーソルを非表示にする
-    Curses.curs_set(0)
+    @buffer = []
+    JS.global[:document].addEventListener('keydown') do
+      @buffer << _1[:key]
+    end
   end
 
   def from_key
-    case Curses.getch
-    when 'q' then :quit
-    when 'r' then :restart
-    when Curses::Key::UP then :rotate
-    when Curses::Key::LEFT then :left
-    when Curses::Key::RIGHT then :right
-    when Curses::Key::DOWN then :down
+    key = @buffer.shift
+    case key.to_s
+      when 'q' then :quit
+      when 'r' then :restart
+      when 'ArrowUp' then :rotate
+      when 'ArrowLeft' then :left
+      when 'ArrowRight' then :right
+      when 'ArrowDown' then :down
     end
   end
 end
